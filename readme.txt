@@ -1,69 +1,100 @@
+Practical 7:
+Aim: Naïve Bayes Classifier algorithm
+from warnings import filterwarnings
+filterwarnings("ignore")
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB, CategoricalNB, GaussianNB
+from sklearn.metrics import accuracy_score
+import seaborn as sns
+
+df=pd.read_csv('D:\\STUDENT\\tycs82\\Book1.csv')
+
+print(df.head(11))
+print(df.tail())
+print(df.info())
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+df['Sore Throat']=le.fit_transform(df['Sore Throat'])
+df['Fever']=le.fit_transform(df['Fever'])
+df['Swollen Glands']=le.fit_transform(df['Swollen Glands'])
+df['Congestion']=le.fit_transform(df['Congestion'])
+df['Headache']=le.fit_transform(df['Headache'])
+df['Diagnosis']=le.fit_transform(df['Diagnosis'])
+
+print(df.info())
+print(df.head(11))
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Sore Throat'],data=df)
+plt.title("Category wise count of Sore Throat")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Fever'],data=df)
+plt.title("Category wise count of Fver")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Swollen Glands'],data=df)
+plt.title("Category wise count of Swallen Glands")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Congestion'],data=df)
+plt.title("Category wise count of Congestion")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Headache'],data=df)
+plt.title("Category wise count of Headache")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+fig,ax=plt.subplots(figsize=(6,6))
+sns.countplot(x=df['Diagnosis'],data=df)
+plt.title("Category wise count of Diagnosis")
+plt.xlabel("category")
+plt.ylabel("Count")
+plt.show()
+
+X=df.drop('Diagnosis',axis=1)
+y=df['Diagnosis']
+
+classifier=MultinomialNB()
+print(classifier.fit(X,y))
+
+classifier=CategoricalNB()
+print(classifier.fit(X,y))
+
+classifier=GaussianNB()
+print(classifier.fit(X,y))
+
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import classification_report,accuracy_score,confusion_matrix,precision_score,recall_score,f1_score
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
+
+classifier=MultinomialNB()
+classifier.fit(X_train,y_train)
+y_pred=classifier.predict(X_test)
+print("Confusion matrix \n ",confusion_matrix(y_test,y_pred))
+print("accuracy_score  ",accuracy_score(y_test,y_pred))
+print("precision_score ",precision_score(y_test,y_pred))
+print("recall_score  ",recall_score(y_test,y_pred))
+print("f1_score  ",f1_score(y_test,y_pred))
+print("classification_report \n ",classification_report(y_test,y_pred))
 
 
----
-
-# AI-Enhanced Hash Generation Tool
-
-## Description
-A web-based tool that generates both traditional and AI-enhanced hashes. The tool includes security analysis to evaluate the strength of generated hashes.
-
-## Features
-- **AI-Based Hashing:** Leverages a neural network to generate unique hashes.
-- **Traditional Hashing:** Supports MD5, SHA-256, SHA-512, bcrypt, and HMAC.
-- **Security Analysis:** Provides entropy and length analysis of hashes.
-
-## Tech Stack
-- **Frontend:** React
-- **Backend:** Flask (Python)
-- **Database:** SQLite (optional)
-- **AI Model:** TensorFlow
-
-## Setup Instructions
-
-### Backend (Python)
-1. **Clone the repository:**
-   ```bash
-   git clone <repo-link>
-   ```
-2. **Navigate to the backend folder:**
-   ```bash
-   cd backend
-   ```
-3. **Create a virtual environment:**
-   ```bash
-   python -m venv venv
-   ```
-4. **Activate the environment and install dependencies:**
-   ```bash
-   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-5. **Run the Flask server:**
-   ```bash
-   flask run
-   ```
-
-### Frontend (React)
-1. **Navigate to the frontend folder:**
-   ```bash
-   cd ../frontend
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Start the React server:**
-   ```bash
-   npm start
-   ```
-
-## Usage
-1. Open your browser and go to `http://localhost:3000`.
-2. Enter the input data and select the hashing method.
-3. Click on "Generate Traditional Hash" or "Generate AI Hash" to see the results.
-
-## License
-This project is open-source and available under the [MIT License](LICENSE).
-
----
 
